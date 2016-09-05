@@ -1,0 +1,28 @@
+c:\users\jordy\documents\visual studio 2015\Projects\WardriveAnalyse\WardriveAnalyse\bin\Debug\WardriveAnalyse.exe.config
+C:\Users\Jordy\Documents\Visual Studio 2015\Projects\WardriveAnalyse\WardriveAnalyse\obj\Debug\WardriveAnalyse.csprojResolveAssemblyReference.cache
+C:\Users\Jordy\Documents\Visual Studio 2015\Projects\WardriveAnalyse\WardriveAnalyse\obj\Debug\MainWindow.g.cs
+C:\Users\Jordy\Documents\Visual Studio 2015\Projects\WardriveAnalyse\WardriveAnalyse\obj\Debug\App.g.cs
+C:\Users\Jordy\Documents\Visual Studio 2015\Projects\WardriveAnalyse\WardriveAnalyse\obj\Debug\WardriveAnalyse_MarkupCompile.cache
+C:\Users\Jordy\Documents\Visual Studio 2015\Projects\WardriveAnalyse\WardriveAnalyse\obj\Debug\WardriveAnalyse_MarkupCompile.lref
+C:\Users\Jordy\Documents\Visual Studio 2015\Projects\WardriveAnalyse\WardriveAnalyse\bin\Debug\WardriveAnalyse.exe
+C:\Users\Jordy\Documents\Visual Studio 2015\Projects\WardriveAnalyse\WardriveAnalyse\bin\Debug\WardriveAnalyse.pdb
+C:\Users\Jordy\Documents\Visual Studio 2015\Projects\WardriveAnalyse\WardriveAnalyse\obj\Debug\MainWindow.baml
+C:\Users\Jordy\Documents\Visual Studio 2015\Projects\WardriveAnalyse\WardriveAnalyse\obj\Debug\WardriveAnalyse.g.resources
+C:\Users\Jordy\Documents\Visual Studio 2015\Projects\WardriveAnalyse\WardriveAnalyse\obj\Debug\WardriveAnalyse.Properties.Resources.resources
+C:\Users\Jordy\Documents\Visual Studio 2015\Projects\WardriveAnalyse\WardriveAnalyse\obj\Debug\WardriveAnalyse.csproj.GenerateResource.Cache
+C:\Users\Jordy\Documents\Visual Studio 2015\Projects\WardriveAnalyse\WardriveAnalyse\obj\Debug\WardriveAnalyse.exe
+C:\Users\Jordy\Documents\Visual Studio 2015\Projects\WardriveAnalyse\WardriveAnalyse\obj\Debug\WardriveAnalyse.pdb
+C:\Users\Jordy\My Bachelor\Sem5 2015-2016\Information Security\Opdracht Herexamen\WardriveAnalyse\WardriveAnalyse\bin\Debug\WardriveAnalyse.exe.config
+C:\Users\Jordy\My Bachelor\Sem5 2015-2016\Information Security\Opdracht Herexamen\WardriveAnalyse\WardriveAnalyse\obj\Debug\WardriveAnalyse.exe
+C:\Users\Jordy\My Bachelor\Sem5 2015-2016\Information Security\Opdracht Herexamen\WardriveAnalyse\WardriveAnalyse\obj\Debug\WardriveAnalyse.pdb
+C:\Users\Jordy\My Bachelor\Sem5 2015-2016\Information Security\Opdracht Herexamen\WardriveAnalyse\WardriveAnalyse\bin\Debug\WardriveAnalyse.exe
+C:\Users\Jordy\My Bachelor\Sem5 2015-2016\Information Security\Opdracht Herexamen\WardriveAnalyse\WardriveAnalyse\bin\Debug\WardriveAnalyse.pdb
+C:\Users\Jordy\My Bachelor\Sem5 2015-2016\Information Security\Opdracht Herexamen\WardriveAnalyse\WardriveAnalyse\obj\Debug\WardriveAnalyse.csprojResolveAssemblyReference.cache
+C:\Users\Jordy\My Bachelor\Sem5 2015-2016\Information Security\Opdracht Herexamen\WardriveAnalyse\WardriveAnalyse\obj\Debug\MainWindow.g.cs
+C:\Users\Jordy\My Bachelor\Sem5 2015-2016\Information Security\Opdracht Herexamen\WardriveAnalyse\WardriveAnalyse\obj\Debug\App.g.cs
+C:\Users\Jordy\My Bachelor\Sem5 2015-2016\Information Security\Opdracht Herexamen\WardriveAnalyse\WardriveAnalyse\obj\Debug\WardriveAnalyse_MarkupCompile.cache
+C:\Users\Jordy\My Bachelor\Sem5 2015-2016\Information Security\Opdracht Herexamen\WardriveAnalyse\WardriveAnalyse\obj\Debug\WardriveAnalyse_MarkupCompile.lref
+C:\Users\Jordy\My Bachelor\Sem5 2015-2016\Information Security\Opdracht Herexamen\WardriveAnalyse\WardriveAnalyse\obj\Debug\MainWindow.baml
+C:\Users\Jordy\My Bachelor\Sem5 2015-2016\Information Security\Opdracht Herexamen\WardriveAnalyse\WardriveAnalyse\obj\Debug\WardriveAnalyse.g.resources
+C:\Users\Jordy\My Bachelor\Sem5 2015-2016\Information Security\Opdracht Herexamen\WardriveAnalyse\WardriveAnalyse\obj\Debug\WardriveAnalyse.Properties.Resources.resources
+C:\Users\Jordy\My Bachelor\Sem5 2015-2016\Information Security\Opdracht Herexamen\WardriveAnalyse\WardriveAnalyse\obj\Debug\WardriveAnalyse.csproj.GenerateResource.Cache
