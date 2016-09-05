@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Overlays within Street View</title>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+#floating-panel {
+  position: absolute;
+  top: 10px;
+  left: 25%;
+  z-index: 5;
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #999;
+  text-align: center;
+  font-family: 'Roboto','sans-serif';
+  line-height: 30px;
+  padding-left: 10px;
+        margin-left: -100px;
+}
+
+       #floating2 {
+  position: absolute;
+  bottom: 10px;
+  z-index: 5;
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #999;
+  text-align: center;
+  font-family: 'Roboto','sans-serif';
+  line-height: 30px;
+  padding-left: 10px;
+        margin-left: 10px;
+}
+      }
+    </style>
+  </head>
+  <body>
+    <div id="floating-panel">
+      <input type="button" value="Toggle Street View" onclick="toggleStreetView();"></input>
+    </div>
+    <div id="floating2">
+        <input type="button" value="Toggle WPA2" onclick="toggleWPA2();"></input>
+        <input type="button" value="Toggle WPA-PSK" onclick="toggleWPAPSK();"></input>
+        <input type="button" value="Toggle WEP" onclick="toggleWEP();"></input>
+        <input type="button" value="Toggle Open" onclick="toggleOPEN();"></input>
+    </div>
+    <div id="map"></div>
+    
+    
+    
+<script>
+
+        
+var panorama;
+var iconUrl;
+var iconSize; 
+var markers_wpa2 = Array();
+var markers_wpapsk = Array();
+var markers_wep = Array();
+var markers_open = Array();
+var wpa2_keer=0;
+var wpapsk_keer=0;
+var wpa_keer=0;
+var wep_keer=0;
+var wopen_keer=0;
+var i;
+    
+function initMap() {    
+    var xhttp;
+    xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (xhttp.readyState == 4 && xhttp.status == 200) {
+          loadMarkers(xhttp);
+      }
+    };
+    xhttp.open("GET", "wardrive.xml", true);
+    xhttp.send();
+}
+
+
+
+function loadMarkers(xml) {
+   var astorPlace = {lat:  51.21256469999999, lng: 4.255287899999985};
+    
+   var map = new google.maps.Map(document.getElementById('map'), {
+     center: astorPlace,
+     zoom: 18,
+     streetViewControl: false
+   });
+    
+   
+    var _list, i, xmlDoc; 
+    xmlDoc = xml.responseXML;
+    console.log("xmlDoc= " + xmlDoc);
+    _list = xmlDoc.childNodes[0];
+    console.log("_list= " + _list);
+
+    var list = _list.getElementsByTagName("Placemark");
+    console.log("list :" + list);
+    console.log(list.length);
+
+    for (var i = 0; i < list.length; i++){
+      var ap = list[i];  
+      var crypt = ap.getElementsByTagName("styleUrl")[0].innerHTML;
+      var coordinates = ap.getElementsByTagName("coordinates")[0].innerHTML;
+      var description = ap.getElementsByTagName("description")[0].innerHTML;
+      var tmp = coordinates.split(',');
+      var longitude = Number(tmp[1]);
+      var latitude = Number(tmp[0]);     
+
+      var icon = {
+        url: iconType(crypt), // url
+        scaledSize: iconSize(crypt), // scaled size
+        origin: new google.maps.Point(0,0), // origin
+        anchor: new google.maps.Point(0, 0) // anchor
+      };      
+      var _marker = new google.maps.Marker({
+        position: {lat: longitude  , lng:  latitude},
+        map: map,
+        icon: icon,
+        title: description
+      });
+      assignToArray(_marker); 
+    }
+    panorama = map.getStreetView();
+    panorama.setPosition(astorPlace);
+    panorama.setPov(/** @type {google.maps.StreetViewPov} */({
+      heading: 265,
+      pitch: 0
+    }));
+    
+    
+ function iconType(crypt){
+     if(crypt=="#WPA2")
+            iconUrl = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+        else if(crypt=="#Wep")
+            iconUrl = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';     
+        else if(crypt=="#WpaPsk")
+            iconUrl = 'http://maps.google.com/mapfiles/ms/icons/orange-dot.png';     
+        else if(crypt=="#Open")
+            iconUrl = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+        else        
+            iconUrl = 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png';
+        return iconUrl;
+    }
+
+    function iconSize(crypt){
+        if(crypt=="#WPA2")
+            return new google.maps.Size(20, 20);
+        else if(crypt=="#Wep")
+            return new google.maps.Size(20, 20);     
+        else if(crypt=="#WpaPsk")
+            return new google.maps.Size(20, 20);       
+        else if(crypt=="#Open")
+            return new google.maps.Size(20, 20);
+        else        
+            return new google.maps.Size(20, 20);
+    }
+
+    function assignToArray(marker){
+        if(crypt=="#WPA2")
+            markers_wpa2.push(marker);
+        else if(crypt=="#WpaPsk")
+            markers_wpapsk.push(marker);
+        else if(crypt=="#Wep")
+            markers_wep.push(marker);
+        else if(crypt=="#Open")
+            markers_open.push(marker);
+    }
+
+}
+    
+function toggleStreetView() {
+  var toggle = panorama.getVisible();
+  if (toggle == false) {
+    panorama.setVisible(true);
+  } 
+  else {
+    panorama.setVisible(false);
+  }
+}
+         
+function toggleWPA2(){
+    if(wpa2_keer==2){
+        for(i = 0 ; i< markers_wpa2.length; i++){
+            var oldIcon = markers_wpa2[i].getIcon(); 
+            var newIcon = {url: oldIcon.url, scaledSize: new google.maps.Size(20, 20) , origin: oldIcon.origin, anchor: oldIcon.anchor};
+            markers_wpa2[i].setIcon(newIcon);
+            markers_wpa2[i].setVisible(true);
+        }
+        for(i = 0 ; i< markers_wpapsk.length; i++) 
+            markers_wpapsk[i].setVisible(true);
+        for(i = 0 ; i< markers_wep.length; i++) 
+            markers_wep[i].setVisible(true);
+        for(i = 0 ; i< markers_open.length; i++) 
+            markers_open[i].setVisible(true);  
+        wpa2_keer=0;
+    }
+    else if(wpa2_keer==1){
+        for(i = 0 ; i< markers_wpa2.length; i++) 
+            markers_wpa2[i].setVisible(true);
+        for(i = 0 ; i< markers_wpapsk.length; i++) 
+            markers_wpapsk[i].setVisible(false);
+        for(i = 0 ; i< markers_wep.length; i++) 
+            markers_wep[i].setVisible(false);
+        for(i = 0 ; i< markers_open.length; i++) 
+            markers_open[i].setVisible(false); 
+        wpa2_keer=2;
+    }
+    else if(wpa2_keer==0){
+        
+        for(i = 0 ; i< markers_wpa2.length; i++) {
+            var oldIcon = markers_wpa2[i].getIcon(); 
+            var newIcon = {url: oldIcon.url, scaledSize: new google.maps.Size(40, 40) , origin: oldIcon.origin, anchor: oldIcon.anchor};
+            markers_wpa2[i].setIcon(newIcon);
+            markers_wpa2[i].setVisible(true);
+        } 
+        wpa2_keer=1;
+    }
+}
+    
+function toggleWPAPSK(){
+    if(wpapsk_keer==2){
+        for(i = 0 ; i< markers_wpa2.length; i++)
+            markers_wpa2[i].setVisible(true);
+        for(i = 0 ; i< markers_wpapsk.length; i++){
+            var oldIcon = markers_wpapsk[i].getIcon(); 
+            var newIcon = {url: oldIcon.url, scaledSize: new google.maps.Size(20, 20) , origin: oldIcon.origin, anchor: oldIcon.anchor};
+            markers_wpapsk[i].setIcon(newIcon);
+            markers_wpapsk[i].setVisible(true);
+        }
+        for(i = 0 ; i< markers_wep.length; i++) 
+            markers_wep[i].setVisible(true);
+        for(i = 0 ; i< markers_open.length; i++) 
+            markers_open[i].setVisible(true); 
+        wpapsk_keer=0;
+    }
+    else if(wpapsk_keer==1){
+         for(i = 0 ; i< markers_wpa2.length; i++) 
+            markers_wpa2[i].setVisible(false);
+        for(i = 0 ; i< markers_wpapsk.length; i++)
+            markers_wpapsk[i].setVisible(true);
+        for(i = 0 ; i< markers_wep.length; i++) 
+            markers_wep[i].setVisible(false);
+        for(i = 0 ; i< markers_open.length; i++) 
+            markers_open[i].setVisible(false);  
+        wpapsk_keer=2;
+    }
+    else if(wpapsk_keer==0){
+        for(i = 0 ; i< markers_wpapsk.length; i++) {
+            var oldIcon = markers_wpapsk[i].getIcon(); 
+            var newIcon = {url: oldIcon.url, scaledSize: new google.maps.Size(30, 30) , origin: oldIcon.origin, anchor: oldIcon.anchor};
+            markers_wpapsk[i].setIcon(newIcon);
+            markers_wpapsk[i].setVisible(true);
+        } 
+        wpapsk_keer=1;   
+    }
+        
+        
+
+}
+    
+
+    
+function toggleWEP(){
+    if(wep_keer==2){
+        for(i = 0 ; i< markers_wpa2.length; i++) 
+            markers_wpa2[i].setVisible(true);
+        for(i = 0 ; i< markers_wpapsk.length; i++) 
+            markers_wpapsk[i].setVisible(true);
+        for(i = 0 ; i< markers_wep.length; i++){
+            markers_wep[i].setVisible(true)
+            var oldIcon = markers_wep[i].getIcon(); 
+            var newIcon = {url: oldIcon.url, scaledSize: new google.maps.Size(20, 20) , origin: oldIcon.origin, anchor: oldIcon.anchor};
+            markers_wep[i].setIcon(newIcon);
+            markers_wep[i].setVisible(true);  
+        }
+        for(i = 0 ; i< markers_open.length; i++) 
+            markers_open[i].setVisible(true);  
+        wep_keer=0;
+    }
+    else if(wep_keer==1){
+         for(i = 0 ; i< markers_wpa2.length; i++) 
+            markers_wpa2[i].setVisible(false);
+        for(i = 0 ; i< markers_wpapsk.length; i++) 
+            markers_wpapsk[i].setVisible(false);
+        for(i = 0 ; i< markers_wep.length; i++)
+            markers_wep[i].setVisible(true);
+        for(i = 0 ; i< markers_open.length; i++) 
+            markers_open[i].setVisible(false);  
+        wep_keer=2;
+    }
+    else if(wep_keer==0){
+        for(i = 0 ; i< markers_wep.length; i++) {
+            var oldIcon = markers_wep[i].getIcon(); 
+            var newIcon = {url: oldIcon.url, scaledSize: new google.maps.Size(40, 40) , origin: oldIcon.origin, anchor: oldIcon.anchor};
+            markers_wep[i].setIcon(newIcon);
+            markers_wep[i].setVisible(true);
+        } 
+        wep_keer=1;
+    }
+}
+    
+function toggleOPEN(){
+    if(open_keer==2){
+         for(i = 0 ; i< markers_wpa2.length; i++) 
+            markers_wpa2[i].setVisible(true);
+        for(i = 0 ; i< markers_wpapsk.length; i++) 
+            markers_wpapsk[i].setVisible(true);
+        for(i = 0 ; i< markers_wep.length; i++) 
+            markers_wep[i].setVisible(true);
+        for(i = 0 ; i< markers_open.length; i++){
+            var oldIcon = markers_open[i].getIcon(); 
+            var newIcon = {url: oldIcon.url, scaledSize: new google.maps.Size(10, 10) , origin: oldIcon.origin, anchor: oldIcon.anchor};
+            markers_open[i].setIcon(newIcon);
+            markers_open[i].setVisible(true);  
+        }
+        open_keer=0
+    }
+    else if(open_keer==1){
+        for(i = 0 ; i< markers_wpa2.length; i++) 
+            markers_wpa2[i].setVisible(true);
+        for(i = 0 ; i< markers_wpapsk.length; i++) 
+            markers_wpapsk[i].setVisible(false);
+        for(i = 0 ; i< markers_wep.length; i++) 
+            markers_wep[i].setVisible(false);
+        for(i = 0 ; i< markers_open.length; i++)
+            markers_open[i].setVisible(true);  
+        open_keer=2;
+    }
+    else if(open_keer==0){
+        for(i = 0 ; i< markers_open.length; i++) {
+            var oldIcon = markers_open[i].getIcon(); 
+            var newIcon = {url: oldIcon.url, scaledSize: new google.maps.Size(30, 30) , origin: oldIcon.origin, anchor: oldIcon.anchor};
+            markers_open[i].setIcon(newIcon);
+            markers_open[i].setVisible(true);
+        } 
+        open_keer=1;
+    }
+}
+    
+
+
+    </script>
+    
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCX1Ww8CcipKMbOMyekgXzBGylGMx1khJ8 &signed_in=true&callback=initMap"
+        async defer>
+    </script>
+  </body>
+</html>
